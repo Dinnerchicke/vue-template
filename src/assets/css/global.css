@@ -2,3 +2,11 @@
   margin: 0;
   padding: 0;
 }
+
+.navshadow {
+  box-shadow:0 3px 4px rgba(0, 21, 41, 0.08);
+}
+
+.boxshadow {
+  box-shadow: -1px 1px 4px #888888;
+}

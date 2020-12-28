@@ -1,5 +1,6 @@
 <template>
-  <el-table
+  <div></div>
+  <!-- <el-table
     :data="tableData"
     border
     style="width: 100%">
@@ -17,7 +18,7 @@
       prop="address"
       label="地址">
     </el-table-column>
-  </el-table>
+  </el-table> -->
 </template>
 
 <script>

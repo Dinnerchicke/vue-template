@@ -4,9 +4,19 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  getters: {},
+  namespaced: true,
+  state: {
+    loginState: JSON.parse(sessionStorage.getItem('loginState'))
+  },
+  mutations: {
+    insertLoginState (state, loginInfo) {
+      state.loginState = loginInfo
+    }
+  },
+  getters: {
+    getRole: state => state.loginState.role,
+    getAccount: state => state.loginState.account
+  },
   actions: {},
   modules: {}
 })

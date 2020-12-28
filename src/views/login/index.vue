@@ -8,33 +8,25 @@
       <el-form-item label="密码" prop="pass" style="width:90%">
         <el-input type="password" v-model="ruleForm.pass" autocomplete="off" style="margin-bottom:5px"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="确认密码" prop="checkPass">
-        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-      </el-form-item> -->
       <el-form-item style="display:flex;justify-content:center;margin-right:80px">
         <el-button type="primary" @click="jump">登陆</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
+
 <script>
+import '@/mock/login.js'
 export default {
   data () {
     var checkAccount = (rule, value, callback) => {
-      if (!value) {
+      if (value === '') {
         return callback(new Error('账户不能为空'))
+      } else {
+        if (this.ruleForm.checkAccount !== '') {
+          this.$refs.ruleForm.validateField('check')
+        }
       }
-      setTimeout(() => {
-        // if (!Number.isInteger(value)) {
-        //   callback(new Error('请输入数字值'))
-        // } else {
-        //   if (value < 18) {
-        //     callback(new Error('必须年满18岁'))
-        //   } else {
-        //     callback()
-        //   }
-        // }
-      }, 1000)
     }
     var validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -61,26 +53,49 @@ export default {
       }
     }
   },
+  created () {
+    // this.getLogin()
+  },
+  mounted () {
+  },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    // submitForm (formName) {
+    //   this.$refs[formName].validate((valid) => {
+    //     if (valid) {
+    //       alert('submit!')
+    //     } else {
+    //       console.log('error submit!!')
+    //       return false
+    //     }
+    //   })
+    // },
+    // resetForm (formName) {
+    //   this.$refs[formName].resetFields()
+    // },
+    getLogin () {
+      // const that = this
+      this.$axios.get('http://127.0.0.1:7002/api/login/') // 这是一个异步方法！
+        .then(res => {
+          // console.log(res.data.data)
+          sessionStorage.setItem('loginState', JSON.stringify(res.data.data))
+          // const loginState = JSON.parse(sessionStorage.getItem('loginState') || '[]')
+          // console.log(loginState)
+          // sessionStorage.setItem('role', res.data.data.role)
+          const payload = res.data.data
+          this.$store.commit('insertLoginState', payload)
+        })
+      // console.log(this.$store.state.loginState)
     },
     jump () {
-      this.$router.push('/main')
+      this.getLogin()
+      setTimeout(() => {
+        this.$router.push('/')
+      }, 100)
     }
   }
 }
 </script>
+
 <style scoped>
 .form {
   height: 100vh;

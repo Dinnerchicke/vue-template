@@ -1,25 +1,21 @@
 <template>
   <el-container class="layout-container">
     <el-aside width="auto" class="el-aside">
-      <Aside :is-collapse="isCollapse" style="overflow:hidden">
-        <span slot="title1" style="margin-right:80px">{{First}}</span>
-        <span slot="title2">{{Second}}</span>
-        <span slot="title3">{{Third}}</span>
-      </Aside>
+      <Aside :is-collapse="isCollapse" style="overflow:hidden" />
     </el-aside>
     <el-container>
-      <el-header class="el-header">
-        <i :class="{'el-icon-s-fold':isCollapse,'el-icon-s-unfold':!isCollapse}" style="float:left;padding-top:20px" @click="changeCollapse" />
-        <span style="float:left;padding-left:20px">xx管理系统</span>
-        <el-dropdown style="float:right;">
+      <el-header class="el-header navshadow" style="height:50px">
+        <i :class="{'el-icon-s-unfold':isCollapse,'el-icon-s-fold':!isCollapse}" style="float:left;padding-top:15px" @click="changeCollapse" />
+        <span style="float:left;padding-left:20px;font-size:16px;color:#92a3b8">xx管理系统</span>
+        <el-dropdown trigger="click" style="float:right;">
           <span style="display:flex;align-items:center;">
-            <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2444650368,3844602910&fm=11&gp=0.jpg" width="40px" height="40px" style="border-radius:20px;margin-right:10px" />
-            <span>小美</span>
+            <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2444650368,3844602910&fm=11&gp=0.jpg" width="35px" height="35px" style="border-radius:20px;margin-right:15px" />
+            <span>{{getAccount}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>设置</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <!-- <el-dropdown-item>设置</el-dropdown-item> -->
+            <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -30,6 +26,7 @@
   </el-container>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import {studentRouterMapping, teacherRouterMapping} from '@/utils/rolesFront.js'
 // import导入的要先放入return{}里才能为之所用
 import Aside from './components/SideBar/index'
@@ -59,12 +56,18 @@ export default {
     changeCollapse () {
       this.isCollapse = !this.isCollapse
       // console.log(this.isCollapse)
+    },
+    logout () {
+      this.$router.push('/login')
+      // window.location.reload()
+      sessionStorage.clear()
     }
   },
   computed: {
+    ...mapGetters(['getAccount']),
     First (studentRouterMapping) {
       var F = this.studentRouterMapping.Fname
-      console.log(this.studentRouterMapping)
+      // console.log(this.studentRouterMapping)
       return F
     },
     Second (studentRouterMapping) {
@@ -75,6 +78,10 @@ export default {
       var T = this.studentRouterMapping.Tname
       return T
     }
+    // username () {
+    //   const loginState = JSON.parse(sessionStorage.getItem('loginState'))
+    //   return loginState.account
+    // }
   }
 }
 </script>
@@ -93,10 +100,14 @@ export default {
 }
 
 .el-header {
-    background-color: #B3C0D1;
+    background-color: #f7f7f7;
     color: #333;
     text-align: center;
-    line-height: 60px;
+    /* height: 50px; */
+    line-height: 50px;
+    /* border: 1px solid red; */
+    /* box-shadow:0 3px 4px rgba(0, 21, 41, 0.08); */
+    z-index: 20;
 }
 
 .el-aside {
@@ -107,7 +118,7 @@ export default {
 }
 
 .el-main {
-    background-color: #E9EEF3;
+    background-color: #f7f7f7;
     color: #333;
     text-align: center;
     line-height: 160px;

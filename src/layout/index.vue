@@ -27,7 +27,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import {studentRouterMapping, teacherRouterMapping} from '@/utils/rolesFront.js'
+import { allRole } from '@/utils/rolesFront.js'
 // import导入的要先放入return{}里才能为之所用
 import Aside from './components/SideBar/index'
 export default {
@@ -37,8 +37,7 @@ export default {
   },
   data () {
     return {
-      studentRouterMapping,
-      teacherRouterMapping,
+      allRole,
       isCollapse: false
     }
   },
@@ -60,24 +59,25 @@ export default {
     logout () {
       this.$router.push('/login')
       // window.location.reload()
+      this.$store.commit('insertCurrentPage', 'main')
       sessionStorage.clear()
     }
   },
   computed: {
-    ...mapGetters(['getAccount']),
-    First (studentRouterMapping) {
-      var F = this.studentRouterMapping.Fname
-      // console.log(this.studentRouterMapping)
-      return F
-    },
-    Second (studentRouterMapping) {
-      var S = this.studentRouterMapping.Sname
-      return S
-    },
-    Third (studentRouterMapping) {
-      var T = this.studentRouterMapping.Tname
-      return T
-    }
+    ...mapGetters(['getAccount'])
+    // First (studentRouterMapping) {
+    //   var F = this.studentRouterMapping.Fname
+    //   // console.log(this.studentRouterMapping)
+    //   return F
+    // },
+    // Second (studentRouterMapping) {
+    //   var S = this.studentRouterMapping.Sname
+    //   return S
+    // },
+    // Third (studentRouterMapping) {
+    //   var T = this.studentRouterMapping.Tname
+    //   return T
+    // }
     // username () {
     //   const loginState = JSON.parse(sessionStorage.getItem('loginState'))
     //   return loginState.account
@@ -115,12 +115,5 @@ export default {
     color: #333;
     /* text-align: center; */
     line-height: 200px;
-}
-
-.el-main {
-    background-color: #f7f7f7;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
 }
 </style>

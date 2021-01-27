@@ -7,11 +7,13 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/global.css'
 import '@/utils/http.js'
 import '@/utils/permission.js'
+import md5 from 'blueimp-md5'
 // 不使用上面这条语句不能使用elementui
 var echarts = require('echarts')
 
 Vue.use(ElementUI)
 Vue.prototype.$echarts = echarts
+Vue.prototype.$md5 = md5
 
 Vue.config.productionTip = false
 

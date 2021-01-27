@@ -1,7 +1,7 @@
 <template>
   <el-menu
     class="menu"
-    default-active="main"
+    :default-active="currentPage"
     background-color="#2e3f53"
     text-color="#b9c5d2"
     router
@@ -9,22 +9,23 @@
     :collapse="isCollapse"
     style="height:100%;"
     active-text-color="#3e99d5">
+    <!-- v-if="routerMain==='main'" -->
     <el-menu-item index="main">
       <i class="el-icon-s-home"></i>
       <span style="margin-right:70px">首页</span>
         <!-- <slot name="title1">导航一</slot> -->
         <!-- <span slot="title1">导航一</span> -->
     </el-menu-item>
-    <el-submenu :index="item.id+''" v-for="item in routerMapping" :key="item.id">
+    <el-submenu :index="item.id+''" v-for="item in routerMapping" v-if="item.hidden==undefined" :key="item.id">
       <template slot="title">
         <i :class="item.icon"></i>
-        <span style="margin-right:70px">{{item.name}}</span>
+        <span style="margin-right:90px">{{item.name}}</span>
         <!-- <slot name="title1">导航一</slot> -->
         <!-- <span slot="title1">导航一</span> -->
       </template>
       <!-- <el-menu-item-group title="学生">
         <template slot="title1">分组一</template> -->
-      <el-menu-item :index="items.routerName" v-for="items in item.data" :key="items.id">{{items.name}}</el-menu-item>
+      <el-menu-item :index="items.routerName" v-for="items in item.data" v-if="items.hidden==undefined" :key="items.id">{{items.name}}</el-menu-item>
         <!-- <el-menu-item index="getInformation">查看信息</el-menu-item>
         <el-menu-item index="changeLicence">修改学籍</el-menu-item> -->
       <!-- </el-menu-item-group> -->
@@ -38,6 +39,12 @@
         <el-menu-item index="1-4-1">选项1</el-menu-item>
       </el-submenu> -->
     </el-submenu>
+    <el-menu-item index="person">
+      <i class="el-icon-user"></i>
+      <span style="margin-right:70px">个人中心</span>
+        <!-- <slot name="title1">导航一</slot> -->
+        <!-- <span slot="title1">导航一</span> -->
+    </el-menu-item>
     <!-- <el-menu-item index="/courseManage">
       <i class="el-icon-menu"></i>
       <slot name="title2">导航二</slot>
@@ -50,19 +57,22 @@
 </template>
 
 <script>
-import {studentRouterMapping, teacherRouterMapping} from '@/utils/rolesFront.js'
+import { allRole } from '@/utils/rolesFront.js'
 export default {
   name: 'Aside',
   components: {},
   props: ['is-collapse'],
   data () {
     return {
-      studentRouterMapping,
-      teacherRouterMapping,
+      allRole,
       routerMapping: {}
     }
   },
-  computed: {},
+  computed: {
+    currentPage () {
+      return this.$store.getters.getCurrentPage
+    }
+  },
   watch: {},
   beforeCreate () {
     // this.roleinit()
@@ -84,12 +94,12 @@ export default {
       // 假如role的权限为0,则使用学生权限,反之使用管理员权限
       // console.log(this.studentRouterMapping)
       const roleState = this.$store.getters.getRole
-      if (roleState === '0') {
-        this.routerMapping = this.studentRouterMapping
-      } else if (roleState === '1') {
-        this.routerMapping = this.teacherRouterMapping
-      }
-      // console.log(this.routerMapping)
+      // if (roleState === '0') {
+      //   this.routerMapping = this.studentRouterMapping
+      // } else if (roleState === '1') {
+      //   this.routerMapping = this.teacherRouterMapping
+      // }
+      this.routerMapping = this.allRole['role' + roleState]
     }
   }
 }

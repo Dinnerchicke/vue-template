@@ -2,21 +2,21 @@
   <div class="form">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
       <span style="color:white;font-size:30px;text-align: center;display:block;margin-bottom:30px">Login</span>
-      <el-form-item label="账号" prop="account" style="width:90%">
+      <el-form-item label="账号" prop="account" style="width:90%;min-width:200px">
         <el-input v-model.number="ruleForm.account"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pass" style="width:90%">
+      <el-form-item label="密码" prop="pass" style="width:90%;min-width:200px">
         <el-input type="password" v-model="ruleForm.pass" autocomplete="off" style="margin-bottom:5px"></el-input>
       </el-form-item>
       <el-form-item style="display:flex;justify-content:center;margin-right:80px">
-        <el-button type="primary" @click="jump">登陆</el-button>
+        <el-button type="primary" @click="jump">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import '@/mock/login.js'
+import '@/mock/default.js'
 export default {
   data () {
     var checkAccount = (rule, value, callback) => {
@@ -89,7 +89,7 @@ export default {
     jump () {
       this.getLogin()
       setTimeout(() => {
-        this.$router.push('/')
+        this.$router.push('/main')
       }, 100)
     }
   }
@@ -113,6 +113,7 @@ export default {
   justify-content: center;
   align-content: center; */
   width: 25vw;
+  min-width: 400px;
   padding: 40px;
   padding-bottom: 20px;
   border: 1px solid #eee;

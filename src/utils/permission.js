@@ -8,12 +8,10 @@ Vue.directive('permission', {
     // console.log(binding)
     const role = binding.value.role
     const roleState = store.getters.getRole
-    // console.log(role)
-    // console.log(roleState)
+    // 假如用户没有相关权限则不显示
     if (role !== roleState) {
       el.parentNode.removeChild(el)
     }
-    // 假如用户没有相关权限则不显示
     // console.log(role)
   }
 })

@@ -2,20 +2,19 @@
   前端权限思路：
   1.前端自己写出权限映射,后端传来权限等级即可
 */
-
-export const stuAdmin = {
-  account: 'SAdmin',
-  password: 'SAdmin',
-  role: 0
-}
-
-export const teaAdmin = {
-  account: 'TAdmin',
-  password: 'TAdmin',
-  role: 1
-}
-
-export const studentRouterMapping = {
+const role0 = {
+  Hide: {
+    id: 0,
+    hidden: true,
+    data: [
+      { id: 11,
+        name: '首页',
+        routerName: 'main'},
+      { id: 21,
+        name: '个人中心',
+        routerName: 'person'}
+    ]
+  },
   F: {
     name: '学籍管理',
     id: 1,
@@ -26,38 +25,23 @@ export const studentRouterMapping = {
         routerName: 'changePassword'},
       { id: 12,
         name: '查看信息',
-        routerName: 'getInformation'},
-      { id: 13,
-        name: '修改学籍',
-        routerName: 'changeLicence'}]
-  },
-  S: {
-    name: '选课管理',
-    id: 2,
-    icon: 'el-icon-s-claim',
-    data: [
-      { id: 21,
-        name: '查看选课',
-        routerName: 'changePassword'},
-      { id: 22,
-        name: '选修课程',
-        routerName: 'changePassword'},
-      { id: 23,
-        name: '修改选课',
-        routerName: 'changePassword'}]
-  },
-  T: {
-    name: '成绩管理',
-    id: 3,
-    icon: 'el-icon-s-marketing',
-    data: [
-      { id: 31,
-        name: '查询成绩',
-        routerName: 'changePassword'}]
+        routerName: 'getInformation'}]
   }
 }
 
-export const teacherRouterMapping = {
+const role1 = {
+  Hide: {
+    id: 0,
+    hidden: true,
+    data: [
+      { id: 11,
+        name: '首页',
+        routerName: 'main'},
+      { id: 21,
+        name: '个人中心',
+        routerName: 'person'}
+    ]
+  },
   F: {
     name: '学籍管理',
     id: 1,
@@ -68,45 +52,65 @@ export const teacherRouterMapping = {
         routerName: 'insertInformation'},
       { id: 12,
         name: '删除学生信息',
-        routerName: 'delInformation'},
-      { id: 13,
-        name: '修改学生信息',
-        routerName: 'changeInformation'}]
+        routerName: 'delInformation'}]
   },
   S: {
-    name: '选课管理',
+    name: '权限管理',
     id: 2,
-    icon: 'el-icon-s-claim',
+    icon: 'el-icon-s-check',
     data: [
-      { id: 21,
-        name: '添加课程',
-        routerName: 'changePassword'},
-      { id: 22,
-        name: '删除课程',
-        routerName: 'changePassword'},
-      { id: 23,
-        name: '修改课程',
-        routerName: 'changePassword'},
-      { id: 24,
-        name: '查看选课详情',
-        routerName: 'changePassword'}]
-  },
-  T: {
-    name: '成绩管理',
-    id: 3,
-    icon: 'el-icon-s-marketing',
-    data: [
-      { id: 31,
-        name: '查询成绩',
-        routerName: 'changePassword'},
-      { id: 32,
-        name: '删除成绩',
-        routerName: 'changePassword'},
-      { id: 33,
-        name: '查看成绩',
-        routerName: 'changePassword'},
-      { id: 34,
-        name: '修改学生成绩',
-        routerName: 'changePassword'}]
+      { id: 13,
+        name: '角色管理',
+        routerName: 'role'},
+      { id: 14,
+        name: '用户管理',
+        routerName: 'user'}]
   }
 }
+
+const role2 = {
+  Hide: {
+    id: 0,
+    hidden: true,
+    data: [
+      { id: 11,
+        name: '首页',
+        routerName: 'main'},
+      { id: 21,
+        name: '个人中心',
+        routerName: 'person'}
+    ]
+  },
+  F: {
+    name: '学籍管理',
+    id: 1,
+    icon: 'el-icon-s-custom',
+    data: [
+      { id: 11,
+        name: '修改密码',
+        routerName: 'changePassword'},
+      { id: 12,
+        name: '查看信息',
+        routerName: 'getInformation'}]
+  },
+  S: {
+    name: '权限管理',
+    id: 2,
+    icon: 'el-icon-s-check',
+    data: [
+      { id: 11,
+        name: 'api管理',
+        routerName: 'api'},
+      { id: 12,
+        name: '权限管理',
+        routerName: 'auth'},
+      { id: 13,
+        name: '角色管理',
+        routerName: 'role'},
+      { id: 14,
+        name: '用户管理',
+        routerName: 'user'}]
+  }
+}
+
+export const allRole = {role0, role1, role2}

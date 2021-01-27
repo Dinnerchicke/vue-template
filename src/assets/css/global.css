@@ -3,10 +3,31 @@
   padding: 0;
 }
 
+/* 导航栏布局 */
 .navshadow {
   box-shadow:0 3px 4px rgba(0, 21, 41, 0.08);
 }
 
 .boxshadow {
   box-shadow: -1px 1px 4px #888888;
+}
+
+/* 卡片布局 */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 25px !important;
+  padding: 15px;
+  background-color: rgb(255, 255, 255);
+}
+
+/* 全局layout的Main布局 */
+.el-main {
+  background-color: #efefef;
+  color: #333;
+  padding-top: 0px;
+  /* justify-content: center;
+  align-content: center; */
+  /* padding-right: 20px; */
+  text-align: center;
+  /* line-height: 160px; */
 }

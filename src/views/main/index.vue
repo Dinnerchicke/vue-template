@@ -1,23 +1,14 @@
 <template>
-  <el-row :gutter="10">
-    <el-col :md="24">
-      <div class="grid-content bg-purple" style="margin-bottom:10px">
-        按钮权限展示
-        <el-button type="danger" @click="changeRole">切换角色</el-button>
-      </div>
+  <el-row >
+    <el-col :md="24" class="card" style="height:100px">
+      <!-- 按钮权限展示 -->
+      <el-button type="danger" @click="changeRole">切换角色</el-button>
     </el-col>
-    <el-col :md="24">
-      <div class="grid-content bg-purple-light boxshadow" style="margin-bottom:10px">
-        <el-button v-permission="{role:'0'}" type="primary">学生信息1</el-button>
-        <el-button v-permission="{role:'0'}" type="primary">学生信息2</el-button>
-        <el-button v-permission="{role:'0'}" type="primary">学生信息3</el-button>
-        <el-button v-permission="{role:'1'}" type="primary">教师信息1</el-button>
-        <el-button v-permission="{role:'1'}" type="primary">教师信息2</el-button>
-        <el-button v-permission="{role:'1'}" type="primary">教师信息3</el-button>
-      </div>
+    <el-col :md="24" class="card" style="height:100px">
+      <el-button v-permission="{role:'0'}" type="primary">用户信息</el-button>
+      <el-button v-permission="{role:'1'}" type="primary">管理员信息</el-button>
+      <el-button v-permission="{role:'2'}" type="primary">超级管理员信息</el-button>
     </el-col>
-    <el-col :md="24"><div class="grid-content bg-purple" style="margin-bottom:10px"></div></el-col>
-    <el-col :md="24"><div class="grid-content bg-purple-light"></div></el-col>
   </el-row>
 </template>
 
@@ -34,6 +25,7 @@ export default {
   watch: {},
   created () {
     // this.requestTest()
+    // this.test()
   },
   mounted () {},
   methods: {
@@ -49,9 +41,15 @@ export default {
       sessionStorage.setItem('loginState', changedLoginState)
       window.location.reload()
     }
-    // ,
+    // test () {
+    //   console.log(this.$md5('value'))
+    // }
     // requestTest () {
-    //   this.$axios.get('/api/test')
+    //   this.$axios.post('/User/Login', {
+    //     Account: '123456',
+    //     Password: 'admin',
+    //     Authority: 'student'
+    //   })
     //     .then(res => {
     //       console.log(res)
     //     }, err => {

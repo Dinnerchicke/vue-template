@@ -7,19 +7,19 @@
     router
     :collapse-transition=false
     :collapse="isCollapse"
-    style="height:100%;"
+    style="height:100%;overflow-y:scroll;"
     active-text-color="#3e99d5">
     <!-- v-if="routerMain==='main'" -->
     <el-menu-item index="main">
-      <i class="el-icon-s-home"></i>
-      <span style="margin-right:70px">首页</span>
+      <i class="iconfont icon-gongyezujian-yibiaopan" style=""> </i>
+      <span style="margin-right:70px;margin-left:10px">Dashboard</span>
         <!-- <slot name="title1">导航一</slot> -->
         <!-- <span slot="title1">导航一</span> -->
     </el-menu-item>
     <el-submenu :index="item.id+''" v-for="item in routerMapping" v-if="item.hidden==undefined" :key="item.id">
       <template slot="title">
         <i :class="item.icon"></i>
-        <span style="margin-right:90px">{{item.name}}</span>
+        <span style="margin-right:90px;padding-left:10px">{{item.name}}</span>
         <!-- <slot name="title1">导航一</slot> -->
         <!-- <span slot="title1">导航一</span> -->
       </template>
@@ -40,8 +40,8 @@
       </el-submenu> -->
     </el-submenu>
     <el-menu-item index="person">
-      <i class="el-icon-user"></i>
-      <span style="margin-right:70px">个人中心</span>
+      <i class="iconfont icon-icon_zhanghao"></i>
+      <span style="margin-right:70px;padding-left:10px">个人中心</span>
         <!-- <slot name="title1">导航一</slot> -->
         <!-- <span slot="title1">导航一</span> -->
     </el-menu-item>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { allRole } from '@/utils/rolesFront.js'
+import { allRole } from '@/assets/staticData/rolesFront.js'
 export default {
   name: 'Aside',
   components: {},
@@ -106,4 +106,7 @@ export default {
 </script>
 
 <style scoped>
+ .menu::-webkit-scrollbar{
+    width: 0 !important;
+}
 </style>

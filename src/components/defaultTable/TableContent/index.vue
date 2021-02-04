@@ -1,17 +1,18 @@
 <template>
   <div>
     <div class="card">
-      <el-row :gutter="20">
+      <el-row :gutter="40">
         <el-col :md="8">
           <el-input v-model="search" placeholder="请输入关键字">
             <!-- @click="showDatas()" -->
             <el-button slot="append" icon="el-icon-search" />
           </el-input>
         </el-col>
-        <el-col :md="10">
-          <slot></slot>
+        <el-col :md="8" :offset="2">
+          <!-- 对列表进行扩充 -->
+          <slot name="navBar"></slot>
         </el-col>
-        <el-col :md="4" style="float:right;padding-left:80px">
+        <el-col :md="4" :offset="getNodeRes ? 2 : 12" style="padding-right:10px">
           <el-button type="primary" icon="el-icon-plus" @click="handleData('添加')">创 建</el-button>
         </el-col>
       </el-row>
@@ -24,7 +25,12 @@
         :header-cell-style="getRowClass"
         border
       >
-      <el-table-column :width="item.width" v-for="item in tableList" :key="item.id" :prop="item.prop" :label="item.name" align="center">
+      <!-- 对列内容进行扩充 -->
+      <el-table-column :width="item.width" v-for="item in tableList" v-if="item.id<=0" :key="item.id" :prop="item.prop" :label="item.name" align="center">
+        <slot name="tableColumn" />
+      </el-table-column>
+      <!-- 只渲染tableList中id>0的项 -->
+      <el-table-column :width="item.width" v-for="item in tableList" v-if="item.id>0" :key="item.id" :prop="item.prop" :label="item.name" align="center">
         <template slot-scope="scope">
           {{scope.row[scope.column.property]}}
         </template>
@@ -65,7 +71,10 @@
         :model="operaForm"
         label-width="100px"
       >
-        <el-form-item v-for="item in operaList" :key="item.id" :prop="item.prop" :label="item.label">
+        <el-form-item v-for="item in operaList" :key="item.id" v-if="item.exist" :prop="item.prop" :label="item.label">
+          <slot name="formItem" />
+        </el-form-item>
+        <el-form-item v-for="item in operaList" :key="item.id" v-if="item.exist===undefined" :prop="item.prop" :label="item.label">
           <el-input v-model="operaForm[item.prop]" :placeholder="item.placeholder" />
         </el-form-item>
       </el-form>
@@ -82,24 +91,29 @@
 export default {
   name: '',
   components: {},
-  props: ['tableList', 'tableData', 'res', 'operaList'],
+  props: ['tableList', 'tableData', 'res', 'operaList', 'count'],
   data () {
     return {
+      getNodeRes: false,
       loadingState: false,
       operaDialog: false,
       dialogTitle: '',
       rules: [],
       operaForm: {}, // operaForm并不需要父子组件传值，只需要传给父组件内容就行了
       pageSize: 10, // 分页的页面大小
-      count: 0, // 分页的数据总数
+      // count: 0, // 分页的数据总数
       currentPage: 1, // 分页的当前页
       search: ''
     }
   },
   computed: {},
   watch: {},
-  created () {},
-  mounted () {},
+  created () {
+  },
+  mounted () {
+    // this.getDatas()
+    this.getNode()
+  },
   methods: {
     // 接口调用
     handleData (handle, index) { // 增和改用同一套页面
@@ -176,14 +190,15 @@ export default {
       })
     },
     getDatas () { // 查：分页用的查询
-      let searchName = 'name'
-      let search = this.search
+      // let searchName = 'name'
+      // let search = this.search
       const params = {
         currentPage: this.currentPage,
-        pageSize: this.pageSize,
-        search: search,
-        searchName: searchName
+        pageSize: this.pageSize
+        // search: search,
+        // searchName: searchName
       }
+      // console.log(params)
       this.$emit('getData', params)
     },
     deleteData (data) { // 删：删除
@@ -220,6 +235,23 @@ export default {
     },
 
     // 基本组件控制
+    getNode () {
+      // 假如上一个节点为slot节点且有内容,则返回true,空出navbar的内容
+      // var child = document.getElementsByClassName('el-col el-col-24 el-col-offset-2 el-col-md-4')[0].previousSibling.previousSibling.getAttribute('class')
+      // console.log(child)
+      let child = document.getElementsByClassName('el-col el-col-24 el-col-offset-2 el-col-md-8')[0]
+      // console.log(child.children)
+      if (child.children.length === 0) {
+        this.getNodeRes = false
+      } else {
+        this.getNodeRes = true
+      }
+      // console.log(this.getNodeRes)
+      // var parent = child[0].parentNode
+      // console.log(parent)
+      // var index = Array.prototype.indexOf.call(parent, child)
+      // console.log(index)// 1
+    },
     getRowClass ({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background: rgb(240,245,250);color:black '
@@ -249,4 +281,21 @@ export default {
 </script>
 
 <style scoped>
+>>>.el-table-column--selection .cell {
+    padding-left: 14px;
+    padding-right:0px;
+    /* padding-right: 14px; */
+}
+>>> .el-dialog__header {
+  background: #409EFF;
+  padding:15px;
+  text-align: left;
+}
+>>>.el-dialog__title{
+  color:#e8eeee;
+  font-size: 16px;
+}
+>>>.el-dialog__close{
+  color:#e8eeee;
+}
 </style>

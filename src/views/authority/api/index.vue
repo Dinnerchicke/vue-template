@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- operaList为增和改的模态框内容 -->
+    <!-- tableList为表格的列内容 -->
+    <!-- tableData为表格数据 -->
+    <!-- res为接口返回值 -->
     <table-content
     :operaList="operaList"
     :tableList="tableList"
@@ -9,26 +13,30 @@
     @deleteData="deleteData"
     @addData="addData"
     @editData="editData"
-     />
+    >
+      <!--  -->
+      <template slot="navBar">
+        <el-input v-model="search" placeholder="请输入关键字">
+          <el-button slot="append" icon="el-icon-search" />
+        </el-input>
+      </template>
+    </table-content>
   </div>
 </template>
 
 <script>
 import '@/mock/default.js'
-import { apiOperaList as operaList } from '@/utils/operaList.js'
-import { apiTableList as tableList } from '@/utils/tableList.js'
-import TableContent from '@/components/defaultTable/TableContent/index'
+import { tableMix } from '@/mixin/tableMix.js'
+import { apiOperaList as operaList } from '@/assets/staticData/operaList.js'
+import { apiTableList as tableList } from '@/assets/staticData/tableList.js'
 export default {
   name: '',
-  components: {
-    TableContent
-  },
+  components: {},
   props: {},
+  mixins: [tableMix], // 一些公用的属性方法可以放在mixin里面,各个组件互不影响
   data () {
     return {
-      tableList: [],
-      tableData: [],
-      res: {}
+      search: ''
     }
   },
   computed: {},

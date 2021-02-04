@@ -21,7 +21,9 @@ export default new Vuex.Store({
   getters: {
     getRole: state => state.loginState.role,
     getAccount: state => state.loginState.name,
-    getCurrentPage: state => state.currentPage
+    getAvatar: state => state.loginState.avatarUrl,
+    getCurrentPage: state => state.currentPage,
+    getLoginState: state => state.loginState
   },
   actions: {},
   modules: {}

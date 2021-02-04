@@ -1,0 +1,2 @@
+webpackJsonp([8],{"Bd+I":function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var c={render:function(e,n){return(0,n._c)("div",{},[n._v("\n  "+n._s("base的值:"+n.props.result)+"\n")])},staticRenderFns:[]};var o=t("C7Lr")({name:"",components:{},data:function(){return{}},computed:{},watch:{},created:function(){},mounted:function(){},methods:{}},c,!0,function(e){t("dh6a")},"data-v-e3e3c846",null);n.default=o.exports},dh6a:function(e,n){}});
+//# sourceMappingURL=8.7c855f4fda171db16855.js.map

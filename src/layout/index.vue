@@ -5,12 +5,13 @@
     </el-aside>
     <el-container>
       <el-header class="el-header navshadow" style="height:50px">
-        <i :class="{'el-icon-s-unfold':isCollapse,'el-icon-s-fold':!isCollapse}" style="float:left;padding-top:15px" @click="changeCollapse" />
-        <span style="float:left;padding-left:20px;font-size:16px;color:#92a3b8">xx管理系统</span>
+        <i :class="{'el-icon-s-unfold':isCollapse,'el-icon-s-fold':!isCollapse}" style="float:left;padding-top:15px;cursor:pointer" @click="changeCollapse" />
+        <breadcrumb />
+        <!-- <span style="float:left;padding-left:20px;font-size:16px;color:#92a3b8">xx管理系统</span> -->
         <el-dropdown trigger="click" style="float:right;">
           <span style="display:flex;align-items:center;">
-            <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2444650368,3844602910&fm=11&gp=0.jpg" width="35px" height="35px" style="border-radius:20px;margin-right:15px" />
-            <span>{{getAccount}}</span>
+            <img :src="getAvatarUrl" width="35px" height="35px" style="border-radius:20px;margin-right:15px;cursor:pointer" />
+            <span style="font-weight:400;color:#8b9baf;cursor:pointer">{{getAccount}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -18,6 +19,9 @@
             <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <el-tooltip effect="dark" :content="fullscreen ? `取消全屏`:`全屏`" placement="bottom" style="float:right;font-size:25px;margin-right:20px;margin-top:14px;cursor:pointer">
+          <i class="el-icon-full-screen" @click="handleFullScreen" />
+        </el-tooltip>
       </el-header>
       <el-main class="el-main">
         <router-view />
@@ -27,31 +31,25 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { allRole } from '@/utils/rolesFront.js'
 // import导入的要先放入return{}里才能为之所用
 import Aside from './components/SideBar/index'
+import breadcrumb from './components/BreadCrumb/index'
 export default {
   name: 'layout',
   components: {
-    Aside
+    Aside,
+    breadcrumb
   },
   data () {
     return {
-      allRole,
-      isCollapse: false
+      avatarUrl: '',
+      isCollapse: false,
+      fullscreen: false
     }
   },
   created () {
-    this.request()
   },
   methods: {
-    async request () {
-      // console.log(this.$axios)
-      // const result = await this.$axios.get('/show')
-      // console.log(result)
-      // console.log(studentRouterMapping.F)
-      // console.log(teacherRouterMapping)
-    },
     changeCollapse () {
       this.isCollapse = !this.isCollapse
       // console.log(this.isCollapse)
@@ -61,10 +59,40 @@ export default {
       // window.location.reload()
       this.$store.commit('insertCurrentPage', 'main')
       sessionStorage.clear()
+    },
+    handleFullScreen () {
+      let element = document.documentElement
+      if (this.fullscreen) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen()
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen()
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen()
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen()
+        }
+      } else {
+        if (element.requestFullscreen) {
+          element.requestFullscreen()
+        } else if (element.webkitRequestFullScreen) {
+          element.webkitRequestFullScreen()
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen()
+        } else if (element.msRequestFullscreen) {
+          // IE11
+          element.msRequestFullscreen()
+        }
+      }
+      this.fullscreen = !this.fullscreen
     }
   },
   computed: {
-    ...mapGetters(['getAccount'])
+    ...mapGetters(['getAccount', 'getAvatar']),
+    getAvatarUrl () {
+      let avatarUrl = this.getAvatar
+      return avatarUrl
+    }
     // First (studentRouterMapping) {
     //   var F = this.studentRouterMapping.Fname
     //   // console.log(this.studentRouterMapping)

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/index.js'
-import {allRole} from '@/utils/rolesFront.js'
+import {allRole} from '@/assets/staticData/rolesFront.js'
 import { Message } from 'element-ui'
 // import axios from 'axios'
 
@@ -41,7 +41,7 @@ const router = new Router({
     {
       path: '/main',
       component: () => import('@/layout/index'),
-      meta: { title: '首页' },
+      meta: { title: 'Dashboard' },
       children: [
         {
           path: '/main',
@@ -51,29 +51,52 @@ const router = new Router({
       ]
     },
     {
-      path: '/rollManage',
-      name: 'rollManage',
+      path: '/optimizeCenter',
+      name: 'optimizeCenter',
       component: () => import('@/layout/index'),
       children: [
         {
-          path: '/changePassword',
-          name: 'changePassword',
-          component: () => import('@/views/rollManage/student/changePassword')
+          path: '/example1',
+          name: 'example1',
+          component: () => import('@/views/optimizeCenter/user/example1'),
+          meta: { title: '样例1' }
         },
         {
-          path: '/getInformation',
-          name: 'getInformation',
-          component: () => import('@/views/rollManage/student/getInformation')
+          path: '/example2',
+          name: 'example2',
+          component: () => import('@/views/optimizeCenter/user/example2'),
+          meta: { title: '样例2' }
         },
         {
-          path: '/delInformation',
-          name: 'delInformation',
-          component: () => import('@/views/rollManage/manage/delInformation')
+          path: '/exampleManage1',
+          name: 'exampleManage1',
+          component: () => import('@/views/optimizeCenter/manage/example1'),
+          meta: { title: '删除信息' }
         },
         {
-          path: '/insertInformation',
-          name: 'insertInformation',
-          component: () => import('@/views/rollManage/manage/insertInformation')
+          path: '/exampleManage2',
+          name: 'exampleManage2',
+          component: () => import('@/views/optimizeCenter/manage/example2'),
+          meta: { title: '添加信息' }
+        }
+      ]
+    },
+    {
+      path: '/exampleCenter',
+      name: 'exampleCenter',
+      component: () => import('@/layout/index'),
+      children: [
+        {
+          path: '/table',
+          name: 'table',
+          component: () => import('@/views/exampleCenter/Table/index'),
+          meta: { title: '表格样例' }
+        },
+        {
+          path: '/echarts',
+          name: 'echarts',
+          component: () => import('@/views/exampleCenter/Echarts/index'),
+          meta: { title: '图表样例' }
         }
       ]
     },
@@ -85,22 +108,26 @@ const router = new Router({
         {
           path: '/api',
           name: 'api',
-          component: () => import('@/views/authority/api/index')
+          component: () => import('@/views/authority/api/index'),
+          meta: { title: 'api管理' }
         },
         {
           path: '/auth',
           name: 'auth',
-          component: () => import('@/views/authority/auth/index')
+          component: () => import('@/views/authority/auth/index'),
+          meta: { title: '权限管理' }
         },
         {
           path: '/role',
           name: 'role',
-          component: () => import('@/views/authority/role/index')
+          component: () => import('@/views/authority/role/index'),
+          meta: { title: '角色管理' }
         },
         {
           path: '/user',
           name: 'user',
-          component: () => import('@/views/authority/user/index')
+          component: () => import('@/views/authority/user/index'),
+          meta: { title: '用户管理' }
         }
       ]
     },
@@ -111,7 +138,8 @@ const router = new Router({
       children: [
         {
           path: '/person',
-          component: () => import('@/views/person/index')
+          component: () => import('@/views/person/index'),
+          meta: { title: '个人中心' }
         }
       ]
     }
@@ -120,6 +148,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.path === '/login' || to.path === '/main') {
+    store.commit('insertCurrentPage', (to.fullPath).substr(1))
     next()
   } else {
     // 从vuex里面获取数据代替router,假如没有数据则重新获取

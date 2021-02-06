@@ -2,10 +2,10 @@
   <div class="form">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
       <span style="color:white;font-size:30px;text-align: center;display:block;margin-bottom:30px">Login</span>
-      <el-form-item label="账号" prop="account" style="width:90%;min-width:200px">
+      <el-form-item label="账号" prop="account" style="width:90%;min-width:200px;">
         <el-input v-model.number="ruleForm.account"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pass" style="width:90%;min-width:200px">
+      <el-form-item label="密码" prop="pass" style="width:90%;min-width:200px;color:#fff">
         <el-input type="password" v-model="ruleForm.pass" autocomplete="off" style="margin-bottom:5px"></el-input>
       </el-form-item>
       <el-form-item style="display:flex;justify-content:center;margin-right:80px">
@@ -106,7 +106,8 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+  /* background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8); */
+  background-image: url('../../assets/image/7.jpg');
 }
 .demo-ruleForm{
   /* flex-direction: column;

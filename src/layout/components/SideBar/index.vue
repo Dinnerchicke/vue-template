@@ -10,49 +10,22 @@
     style="height:100%;overflow-y:scroll;"
     active-text-color="#3e99d5">
     <!-- v-if="routerMain==='main'" -->
-    <el-menu-item index="main">
-      <i class="iconfont icon-gongyezujian-yibiaopan" style=""> </i>
-      <span style="margin-right:70px;margin-left:10px">Dashboard</span>
-        <!-- <slot name="title1">导航一</slot> -->
-        <!-- <span slot="title1">导航一</span> -->
-    </el-menu-item>
-    <el-submenu :index="item.id+''" v-for="item in routerMapping" v-if="item.hidden==undefined" :key="item.id">
-      <template slot="title">
-        <i :class="item.icon"></i>
-        <span style="margin-right:90px;padding-left:10px">{{item.name}}</span>
-        <!-- <slot name="title1">导航一</slot> -->
-        <!-- <span slot="title1">导航一</span> -->
-      </template>
-      <!-- <el-menu-item-group title="学生">
-        <template slot="title1">分组一</template> -->
-      <el-menu-item :index="items.routerName" v-for="items in item.data" v-if="items.hidden==undefined" :key="items.id">{{items.name}}</el-menu-item>
-        <!-- <el-menu-item index="getInformation">查看信息</el-menu-item>
-        <el-menu-item index="changeLicence">修改学籍</el-menu-item> -->
-      <!-- </el-menu-item-group> -->
-      <!-- <el-menu-item-group title="管理员">
-        <el-menu-item index="insertInformation">添加学生信息</el-menu-item>
-        <el-menu-item index="delInformation">删除学生信息</el-menu-item>
-        <el-menu-item index="changeInformation">修改学生信息</el-menu-item>
-      </el-menu-item-group> -->
-      <!-- <el-submenu index="1-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="1-4-1">选项1</el-menu-item>
-      </el-submenu> -->
-    </el-submenu>
-    <el-menu-item index="person">
-      <i class="iconfont icon-icon_zhanghao"></i>
-      <span style="margin-right:70px;padding-left:10px">个人中心</span>
-        <!-- <slot name="title1">导航一</slot> -->
-        <!-- <span slot="title1">导航一</span> -->
-    </el-menu-item>
-    <!-- <el-menu-item index="/courseManage">
-      <i class="el-icon-menu"></i>
-      <slot name="title2">导航二</slot>
-    </el-menu-item>
-    <el-menu-item index="/scoreManage">
-      <i class="el-icon-document"></i>
-      <slot name="title3">导航三</slot>
-    </el-menu-item> -->
+    <!-- 首先判断是不是hidden项目，如果不是才才进入循环 -->
+    <div v-for="item in routerGet" :key="item.id" v-if="(item.hidden==undefined) && (JSON.stringify(routerMapping).indexOf(item.name)!==-1)">
+      <!-- 循环判断假如有children则进入上面，否则进入下面 -->
+      <el-menu-item v-if="item.children.length === 1" :index="item.children[0].name">
+        <i :class="item.meta.icon" style=""> </i>
+        <span style="margin-right:70px;margin-left:10px">{{item.meta.name}}</span>
+      </el-menu-item>
+
+      <el-submenu v-else :index="item.name">
+        <template slot="title">
+          <i :class="item.meta.icon"></i>
+          <span style="margin-right:90px;padding-left:10px">{{item.meta.name}}</span>
+        </template>
+        <el-menu-item :index="items.name" v-for="items in item.children" v-if="(items.hidden==undefined) && (JSON.stringify(routerMapping).indexOf(items.name)!==-1)" :key="items.id" popper-append-to-body>{{items.meta.name}}</el-menu-item>
+      </el-submenu>
+    </div>
   </el-menu>
 </template>
 
@@ -65,13 +38,25 @@ export default {
   data () {
     return {
       allRole,
+      routerGet: {},
       routerMapping: {}
     }
   },
   computed: {
     currentPage () {
+      console.log(this.$store.getters.getCurrentPage)
       return this.$store.getters.getCurrentPage
     }
+    // hasPermission (item) {
+    //   console.log(item)
+    //   // let obj = {
+    //   //   a: 'name'
+    //   // }
+    //   // console.log(Object.toString())
+    //   console.log()
+    //   // eslint-disable-next-line no-unneeded-ternary
+    //   return this.routerGet.indexOf(item) !== -1 ? true : false
+    // }
   },
   watch: {},
   beforeCreate () {
@@ -82,6 +67,7 @@ export default {
   },
   mounted () {
     this.roleinit()
+    this.routerinit()
   },
   methods: {
     // handleOpen (key, keyPath) {
@@ -90,6 +76,10 @@ export default {
     // handleClose (key, keyPath) {
     //   console.log(key, keyPath)
     // }
+    routerinit () {
+      this.routerGet = this.$router.options.routes
+      // console.log(this.routerGet)
+    },
     roleinit () {
       // 假如role的权限为0,则使用学生权限,反之使用管理员权限
       // console.log(this.studentRouterMapping)
@@ -100,6 +90,7 @@ export default {
       //   this.routerMapping = this.teacherRouterMapping
       // }
       this.routerMapping = this.allRole['role' + roleState]
+      console.log(JSON.stringify(this.routerMapping))
     }
   }
 }

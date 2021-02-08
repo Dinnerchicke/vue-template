@@ -12,7 +12,7 @@
           label-position="left"
         >
           <el-form-item label="头像" style="font-weight:bold">
-            <img :src="user.avatarUrl" width="120px" height="120px" style="float:left" >
+            <img :src="user.avatarUrl" class="avatar" width="120px" height="120px" style="float:left" >
           </el-form-item>
           <el-form-item label="手机号" style="font-weight:bold">
             <span style="float:left;font-weight:normal">{{ user.phone }}</span>
@@ -157,4 +157,9 @@ export default {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
   }
+/* .avatar{animation:rotate-center .6s ease-in-out both}
+@keyframes rotate-center{0%{transform:rotate(0)}100%{transform:rotate(360deg)}} */
+
+.avatar{animation:rotate-scale-up-ver .65s linear both}
+@keyframes rotate-scale-up-ver{0%{transform:scale(1) rotateY(0)}50%{transform:scale(2) rotateY(180deg)}100%{transform:scale(1) rotateY(360deg)}}
 </style>

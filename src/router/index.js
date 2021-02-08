@@ -4,6 +4,7 @@ import store from '@/store/index.js'
 import {allRole} from '@/assets/staticData/rolesFront.js'
 import { Message } from 'element-ui'
 // import axios from 'axios'
+import Layout from '@/layout/index'
 
 // 在这里对导入模块进行界定,降低耦合
 // var i = [0, 1, 2]
@@ -19,7 +20,8 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/login/index')
+      component: () => import('@/views/login/index'),
+      hidden: true
     },
     {
       path: '/404',
@@ -28,118 +30,170 @@ const router = new Router({
     },
     {
       path: '/',
-      component: () => import('@/layout/index'),
+      component: Layout,
       redirect: '/login',
       children: [
         {
           path: '/login',
           component: () => import('@/views/login/index'),
-          meta: { title: '首页' }
+          meta: { name: '首页' }
         }
-      ]
+      ],
+      hidden: true
     },
     {
-      path: '/main',
-      component: () => import('@/layout/index'),
-      meta: { title: 'Dashboard' },
+      path: '/mainF',
+      name: 'mainF',
+      component: Layout,
+      meta: {
+        name: 'Dashboard',
+        icon: 'iconfont icon-gongyezujian-yibiaopan'
+      },
       children: [
         {
           path: '/main',
           name: 'main',
-          component: () => import('@/views/main/index')
+          component: () => import('@/views/main/index'),
+          meta: {
+            name: 'main'
+          }
         }
       ]
     },
     {
       path: '/optimizeCenter',
       name: 'optimizeCenter',
-      component: () => import('@/layout/index'),
+      component: Layout,
+      meta: {
+        name: '优化中心',
+        icon: 'iconfont icon-gongnengdingyi1'
+      },
       children: [
         {
           path: '/example1',
           name: 'example1',
           component: () => import('@/views/optimizeCenter/user/example1'),
-          meta: { title: '样例1' }
+          meta: { name: '样例1' }
         },
         {
           path: '/example2',
           name: 'example2',
           component: () => import('@/views/optimizeCenter/user/example2'),
-          meta: { title: '样例2' }
+          meta: { name: '样例2' }
         },
         {
           path: '/exampleManage1',
           name: 'exampleManage1',
           component: () => import('@/views/optimizeCenter/manage/example1'),
-          meta: { title: '删除信息' }
+          meta: { name: '样例1' }
         },
         {
           path: '/exampleManage2',
           name: 'exampleManage2',
           component: () => import('@/views/optimizeCenter/manage/example2'),
-          meta: { title: '添加信息' }
+          meta: { name: '样例2' },
+          hidden: true
         }
       ]
     },
     {
       path: '/exampleCenter',
       name: 'exampleCenter',
-      component: () => import('@/layout/index'),
+      component: Layout,
+      meta: {
+        name: '样例中心',
+        icon: 'iconfont icon-biaodanzujian-biaoge1'
+      },
       children: [
         {
           path: '/table',
           name: 'table',
           component: () => import('@/views/exampleCenter/Table/index'),
-          meta: { title: '表格样例' }
+          meta: { name: '表格样例' }
         },
         {
           path: '/echarts',
           name: 'echarts',
           component: () => import('@/views/exampleCenter/Echarts/index'),
-          meta: { title: '图表样例' }
+          meta: { name: '图表样例' }
+        }
+      ]
+    },
+    {
+      path: '/CSSCenter',
+      name: 'CSSCenter',
+      component: Layout,
+      meta: {
+        name: '样式中心',
+        icon: 'iconfont icon-moshubang'
+      },
+      children: [
+        {
+          path: '/baseSass',
+          name: 'baseSass',
+          component: () => import('@/views/CSSCenter/baseSass/index'),
+          meta: { name: '基础样例' }
+        },
+        {
+          path: '/animista',
+          name: 'animista',
+          component: () => import('@/views/CSSCenter/animista/index'),
+          meta: { name: 'animista动效样例' }
         }
       ]
     },
     {
       path: '/powerManage',
       name: 'powerManage',
-      component: () => import('@/layout/index'),
+      component: Layout,
+      meta: {
+        name: '权限管理',
+        icon: 'iconfont icon-quanxianshenpi'
+      },
       children: [
         {
           path: '/api',
           name: 'api',
           component: () => import('@/views/authority/api/index'),
-          meta: { title: 'api管理' }
+          meta: { name: 'api管理' }
         },
         {
           path: '/auth',
           name: 'auth',
           component: () => import('@/views/authority/auth/index'),
-          meta: { title: '权限管理' }
+          meta: { name: '权限管理' }
         },
         {
           path: '/role',
           name: 'role',
           component: () => import('@/views/authority/role/index'),
-          meta: { title: '角色管理' }
+          meta: { name: '角色管理' }
         },
         {
           path: '/user',
           name: 'user',
           component: () => import('@/views/authority/user/index'),
-          meta: { title: '用户管理' }
+          meta: { name: '用户管理' }
         }
       ]
     },
     {
-      path: '/person',
-      name: 'person',
-      component: () => import('@/layout/index'),
+      path: '/personF',
+      name: 'personF',
+      component: Layout,
+      meta: {
+        name: '个人中心',
+        icon: 'iconfont icon-icon_zhanghao'
+      },
       children: [
         {
           path: '/person',
+          name: 'person',
           component: () => import('@/views/person/index'),
-          meta: { title: '个人中心' }
+          meta: {
+            name: '个人中心'
+          },
+          hidden: true
         }
       ]
     }
@@ -155,6 +209,7 @@ router.beforeEach((to, from, next) => {
     // 对用户状态进行检测,假如跳转到非当前用户权限范围则返回
     try {
       store.commit('insertCurrentPage', (to.fullPath).substr(1))
+      // console.log(to.fullPath)
       // 这里有个问题，假如获取到的role为null,直接会报typeError,不会进入roleState === null,故要try{}catch{}
       const roleState = store.getters.getRole
       // eslint-disable-next-line no-useless-escape

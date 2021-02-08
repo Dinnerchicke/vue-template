@@ -31,7 +31,7 @@ Mock.mock('http://127.0.0.1:7002/api/login/', 'get', {
     'name': 'admin',
     'account': 'admin',
     'password': 'admin',
-    role: '2',
+    role: '1',
     avatarUrl: 'http://81.68.73.55/group1/M00/00/0A/rBEAA2AbtSqAdHgzAAAiTNpdZb8851.jpg',
     phone: 18888888888,
     sex: 'middle'

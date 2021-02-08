@@ -16,6 +16,9 @@ export default new Vuex.Store({
     },
     insertCurrentPage (state, currentPage) {
       state.currentPage = currentPage
+    },
+    insertRole (state, role) {
+      state.loginState.role = role
     }
   },
   getters: {

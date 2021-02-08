@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     currentPage () {
-      console.log(this.$store.getters.getCurrentPage)
+      // console.log(this.$store.getters.getCurrentPage)
       return this.$store.getters.getCurrentPage
     }
     // hasPermission (item) {
@@ -90,7 +90,7 @@ export default {
       //   this.routerMapping = this.teacherRouterMapping
       // }
       this.routerMapping = this.allRole['role' + roleState]
-      console.log(JSON.stringify(this.routerMapping))
+      // console.log(JSON.stringify(this.routerMapping))
     }
   }
 }

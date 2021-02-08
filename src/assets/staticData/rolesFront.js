@@ -3,94 +3,42 @@
   1.前端自己写出权限映射,后端传来权限等级即可
 */
 // 隐藏路由
-const main = {
-  id: 11,
-  routerName: 'main',
-  FatherName: 'mainF'
-}
-const person = {
-  id: 21,
-  routerName: 'person',
-  FatherName: 'personF'
-}
+const main = ['main', 'mainF']
+
+const person = ['person', 'personF']
 
 // 管理员的样例中心
-const FM = {
-  name: 'optimizeCenter',
-  data: [
-    { id: 11,
-      routerName: 'exampleManage1'}]
-}
+const FM = ['optimizeCenter', 'exampleManage1']
 
-const SM = {
-  name: 'exampleCenter',
-  data: [
-    { id: 11,
-      routerName: 'table'},
-    { id: 12,
-      routerName: 'echarts'}]
-}
+const SM = ['exampleCenter', 'table', 'echarts']
 
-const FC = {
-  name: 'CSSCenter',
-  data: [
-    { id: 11,
-      routerName: 'baseSass'},
-    { id: 12,
-      routerName: 'animista'}]
-}
+const FC = ['CSSCenter', 'baseSass', 'animista']
+
+// 经过测试，Array.toString()并不会输出//背后的内容
 
 // 抽离直接使用
-const role0 = {
-  // Hide,
+const role0 = [
   main,
-  F: {
-    name: 'optimizeCenter',
-    data: [
-      { id: 11,
-        routerName: 'example1'},
-      { id: 12,
-        routerName: 'example2'}]
-  },
+  ['optimizeCenter', 'example1', 'example2'], // 普通用户的样例
   person
-}
+]
 
-const role1 = {
-  // Hide,
+const role1 = [
   main,
   FM,
   SM,
   FC,
-  S: {
-    name: 'powerManage',
-    data: [
-      { id: 13,
-        routerName: 'role'},
-      { id: 14,
-        routerName: 'user'}]
-  },
+  ['powerManage', 'role', 'user'], // 权限中心
   person
-}
+]
 
-const role2 = {
-  // Hide,
+const role2 = [
   main,
   FM,
   SM,
   FC,
-  S: {
-    name: 'powerManage',
-    data: [
-      { id: 11,
-        routerName: 'api'},
-      { id: 12,
-        routerName: 'auth'},
-      { id: 13,
-        routerName: 'role'},
-      { id: 14,
-        routerName: 'user'}]
-  },
+  ['powerManage', 'api', 'auth', 'role', 'user'], // 权限中心
   person
-}
+]
 
 export const allRole = {role0, role1, role2}

@@ -1,6 +1,7 @@
 <template>
   <div class="">
-    content
+    Content
+    <!-- {{arrGet}} -->
   </div>
 </template>
 
@@ -15,9 +16,20 @@ export default {
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    // this.arrGet()
+  },
   mounted () {},
-  methods: {}
+  methods: {
+    // arrGet () {
+    //   let arr = [
+    //     'ccc', 3, 4, 5, // aaa
+    //     ['aaa', 'bbb'] // power
+    //   ]
+    //   console.log(arr.includes('ccc'))
+    //   console.log(arr.toString())
+    // }
+  }
 }
 </script>
 

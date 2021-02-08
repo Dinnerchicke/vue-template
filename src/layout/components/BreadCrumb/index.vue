@@ -2,7 +2,7 @@
   <div class="">
     <el-breadcrumb separator=">" style="float:left;margin-left:20px;padding-top:19px;">
       <el-breadcrumb-item class="el-bread-one" v-for="item in breadList" :key="item.path">
-        <router-link :to="item.redirect||item.path">{{item.meta.title}}</router-link>
+        <router-link :to="item.redirect||item.path">{{item.meta.name}}</router-link>
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
@@ -32,13 +32,14 @@ export default {
   methods: {
     getBreadList () {
       // console.log(this.$route.matched)
-      let match = this.$route.matched.filter(item => item.meta.title)
+      let match = this.$route.matched.filter(item => item.meta.name)
       const first = match[0]
       // console.log(first.path)
-      if (first && first.path.trim().toLocaleLowerCase() !== '/main'.toLocaleLowerCase()) {
-        match = [{path: '/main', meta: { title: 'Dashboard' }}].concat(match)
+      if (first && first.path.trim().toLocaleLowerCase() !== '/mainF'.toLocaleLowerCase()) {
+        match = [{path: '/mainF', meta: { name: 'Dashboard' }}].concat(match)
       }
       this.breadList = match
+      // console.log(this.breadList)
     }
   }
 }

@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/index.js'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
 import {allRole} from '@/assets/staticData/rolesFront.js'
 import { Message } from 'element-ui'
 // import axios from 'axios'
 import Layout from '@/layout/index'
+
+NProgress.configure({ showSpinner: false })
 
 // 在这里对导入模块进行界定,降低耦合
 // var i = [0, 1, 2]
@@ -44,6 +48,7 @@ const router = new Router({
     {
       path: '/mainF',
       name: 'mainF',
+      redirect: '/main',
       component: Layout,
       meta: {
         name: 'Dashboard',
@@ -55,7 +60,7 @@ const router = new Router({
           name: 'main',
           component: () => import('@/views/main/index'),
           meta: {
-            name: 'main'
+            name: '首页'
           }
         }
       ]
@@ -63,6 +68,7 @@ const router = new Router({
     {
       path: '/optimizeCenter',
       name: 'optimizeCenter',
+      redirect: '/exampleManage1',
       component: Layout,
       meta: {
         name: '优化中心',
@@ -99,6 +105,7 @@ const router = new Router({
     {
       path: '/exampleCenter',
       name: 'exampleCenter',
+      redirect: '/table',
       component: Layout,
       meta: {
         name: '样例中心',
@@ -122,6 +129,7 @@ const router = new Router({
     {
       path: '/CSSCenter',
       name: 'CSSCenter',
+      redirect: '/baseSass',
       component: Layout,
       meta: {
         name: '样式中心',
@@ -145,6 +153,7 @@ const router = new Router({
     {
       path: '/powerManage',
       name: 'powerManage',
+      redirect: '/api',
       component: Layout,
       meta: {
         name: '权限管理',
@@ -180,6 +189,7 @@ const router = new Router({
     {
       path: '/personF',
       name: 'personF',
+      redirect: '/person',
       component: Layout,
       meta: {
         name: '个人中心',
@@ -190,9 +200,6 @@ const router = new Router({
           path: '/person',
           name: 'person',
           component: () => import('@/views/person/index'),
-          meta: {
-            name: '个人中心'
-          },
           hidden: true
         }
       ]
@@ -201,35 +208,42 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  NProgress.start()
+  store.commit('insertCurrentPage', (to.fullPath).substr(1))
   if (to.path === '/login' || to.path === '/main') {
-    store.commit('insertCurrentPage', (to.fullPath).substr(1))
     next()
+    NProgress.done()
   } else {
     // 从vuex里面获取数据代替router,假如没有数据则重新获取
     // 对用户状态进行检测,假如跳转到非当前用户权限范围则返回
     try {
-      store.commit('insertCurrentPage', (to.fullPath).substr(1))
       // console.log(to.fullPath)
       // 这里有个问题，假如获取到的role为null,直接会报typeError,不会进入roleState === null,故要try{}catch{}
       const roleState = store.getters.getRole
       // eslint-disable-next-line no-useless-escape
-      const toPath = '\"routerName\":\"' + (to.path).substr(1) + '\"'
+      const toPath = '' + (to.path).substr(1) + ''
+      // const toPath = '\"routerName\":\"' + (to.path).substr(1) + '\"'
       // const toPath = (to.path).substr(1)
       // console.log(toPath)
       var roleName = 'role' + roleState
       // console.log(allRole[roleName])
-      var roleGet = JSON.stringify(allRole[roleName])
+      var roleGet = allRole[roleName].toString()
       if (roleGet.indexOf(toPath) === -1) {
         // console.log(toPath)
         // console.log('非法跳转')
         // return new Error('非法跳转')
         Message.error('非法跳转')
+        localStorage.clear()
+        next('/login')
+        NProgress.done()
       } else {
         next()
+        NProgress.done()
       }
     } catch (error) {
       // console.log(error)
       next('/login')
+      NProgress.done()
     }
   }
 })

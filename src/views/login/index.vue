@@ -82,6 +82,7 @@ export default {
           // console.log(loginState)
           // sessionStorage.setItem('role', res.data.data.role)
           const payload = res.data.data
+          // console.log(payload)
           this.$store.commit('insertLoginState', payload)
         })
       // console.log(this.$store.state.loginState)

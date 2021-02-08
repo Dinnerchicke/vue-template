@@ -55,10 +55,12 @@ export default {
       // console.log(this.isCollapse)
     },
     logout () {
-      this.$router.push('/login')
-      // window.location.reload()
-      this.$store.commit('insertCurrentPage', 'main')
+      // this.$store.commit('insertCurrentPage', 'main')
+      // this.$store.commit('insertLoginState', '')
+      // this.$store.commit('insertRole', '')
       sessionStorage.clear()
+      this.$router.push('/login')
+      window.location.reload() // 刷新vuex
     },
     handleFullScreen () {
       let element = document.documentElement
@@ -90,8 +92,7 @@ export default {
   computed: {
     ...mapGetters(['getAccount', 'getAvatar']),
     getAvatarUrl () {
-      let avatarUrl = this.getAvatar
-      return avatarUrl
+      return this.getAvatar
     }
     // First (studentRouterMapping) {
     //   var F = this.studentRouterMapping.Fname

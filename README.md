@@ -10,6 +10,7 @@ UI使用ElementUI
 
 ### staticData
 静态数据放在@/assets/staticData/里面
+
 有echarts、表格模板相关数据、角色路由数据
 
 ### Eslint
@@ -20,9 +21,15 @@ UI使用ElementUI
 
 ### 路径别名
 '@': 'src',
+
 'utils': 'src/utils',
+
 'api': 'src/api',
+
 'views': 'src/views',
+
 'components': 'src/components',
+
 'store': 'src/store',
+
 'styles': 'src/styles'

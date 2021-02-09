@@ -1,7 +1,7 @@
 <template>
   <el-container class="layout-container">
     <el-aside width="auto" class="el-aside">
-      <Aside :is-collapse="isCollapse" style="overflow:hidden" />
+      <Aside :is-collapse="isCollapse" style="" />
     </el-aside>
     <el-container>
       <el-header class="el-header navshadow" style="height:50px">

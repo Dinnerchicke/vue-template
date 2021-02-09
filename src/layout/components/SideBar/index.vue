@@ -7,23 +7,25 @@
     router
     :collapse-transition=false
     :collapse="isCollapse"
-    style="height:100%;overflow-y:scroll;"
+    style="height:100%;"
     active-text-color="#3e99d5">
     <!-- v-if="routerMain==='main'" -->
     <!-- 首先判断是不是hidden项目，如果不是才才进入循环 -->
-    <div v-for="item in routerGet" :key="item.id" v-if="(item.hidden==undefined) && (JSON.stringify(routerMapping).indexOf(item.name)!==-1)">
+    <div v-for="item in routerGet" :key="item.id" v-if="(item.hidden==undefined) && (routerMapping.toString().indexOf(item.name)!==-1)">
       <!-- 循环判断假如有children则进入上面，否则进入下面 -->
       <el-menu-item v-if="item.children.length === 1" :index="item.children[0].name">
-        <i :class="item.meta.icon" style=""> </i>
+        <i :class="item.meta.icon" style="" />
         <span style="margin-right:70px;margin-left:10px">{{item.meta.name}}</span>
       </el-menu-item>
 
       <el-submenu v-else :index="item.name">
         <template slot="title">
-          <i :class="item.meta.icon"></i>
-          <span style="margin-right:90px;padding-left:10px">{{item.meta.name}}</span>
+          <i :class="item.meta.icon" />
+          <span style="margin-right:70px;padding-left:10px">{{item.meta.name}}</span>
         </template>
-        <el-menu-item :index="items.name" v-for="items in item.children" v-if="(items.hidden==undefined) && (JSON.stringify(routerMapping).indexOf(items.name)!==-1)" :key="items.id" popper-append-to-body>{{items.meta.name}}</el-menu-item>
+        <el-menu-item :index="items.name" v-for="items in item.children" v-if="(items.hidden==undefined) && (routerMapping.toString().indexOf(items.name)!==-1)" :key="items.id">
+          {{items.meta.name}}
+        </el-menu-item>
       </el-submenu>
     </div>
   </el-menu>
@@ -97,7 +99,29 @@ export default {
 </script>
 
 <style scoped>
- .menu::-webkit-scrollbar{
+/* .menu {
+  overflow-y:scroll;
+} */
+ /* .menu::-webkit-scrollbar{
     width: 0 !important;
+} */
+
+/* 改侧边栏以后会出现bug */
+.el-menu--collapse >>> .el-menu-item span{
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    visibility: hidden;
+    display: inline-block;
+  }
+.el-menu--collapse >>> .el-submenu__title span{
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    visibility: hidden;
+    display: inline-block;
+  }
+.el-menu--collapse >>> .el-submenu__icon-arrow{
+  display: none;
 }
 </style>

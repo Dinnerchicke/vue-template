@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { allRole } from '@/assets/staticData/rolesFront.js'
+import { allRole } from '@/router/rolesFront.js'
 export default {
   name: 'Aside',
   components: {},

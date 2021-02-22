@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import store from '@/store/index.js'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import {allRole} from '@/assets/staticData/rolesFront.js'
+import {allRole} from './rolesFront.js'
 import { Message } from 'element-ui'
 // import axios from 'axios'
 import Layout from '@/layout/index'
@@ -66,43 +66,6 @@ const router = new Router({
       ]
     },
     {
-      path: '/optimizeCenter',
-      name: 'optimizeCenter',
-      redirect: '/exampleManage1',
-      component: Layout,
-      meta: {
-        name: '优化中心',
-        icon: 'iconfont icon-gongnengdingyi1'
-      },
-      children: [
-        {
-          path: '/example1',
-          name: 'example1',
-          component: () => import('@/views/optimizeCenter/user/example1'),
-          meta: { name: '样例1' }
-        },
-        {
-          path: '/example2',
-          name: 'example2',
-          component: () => import('@/views/optimizeCenter/user/example2'),
-          meta: { name: '样例2' }
-        },
-        {
-          path: '/exampleManage1',
-          name: 'exampleManage1',
-          component: () => import('@/views/optimizeCenter/manage/example1'),
-          meta: { name: '样例1' }
-        },
-        {
-          path: '/exampleManage2',
-          name: 'exampleManage2',
-          component: () => import('@/views/optimizeCenter/manage/example2'),
-          meta: { name: '样例2' },
-          hidden: true
-        }
-      ]
-    },
-    {
       path: '/exampleCenter',
       name: 'exampleCenter',
       redirect: '/table',
@@ -147,6 +110,145 @@ const router = new Router({
           name: 'animista',
           component: () => import('@/views/CSSCenter/animista/index'),
           meta: { name: 'animista动效样例' }
+        }
+      ]
+    },
+    {
+      path: '/optimizeCenter',
+      name: 'optimizeCenter',
+      redirect: '/exampleManage1',
+      component: Layout,
+      meta: {
+        name: '优化中心',
+        icon: 'iconfont icon-gongnengdingyi1'
+      },
+      children: [
+        {
+          path: '/example1',
+          name: 'example1',
+          component: () => import('@/views/optimizeCenter/user/example1'),
+          meta: { name: '样例1' }
+        },
+        {
+          path: '/example2',
+          name: 'example2',
+          component: () => import('@/views/optimizeCenter/user/example2'),
+          meta: { name: '样例2' }
+        },
+        {
+          path: '/exampleManage1',
+          name: 'exampleManage1',
+          component: () => import('@/views/optimizeCenter/manage/example1'),
+          meta: { name: '样例1' }
+        },
+        {
+          path: '/exampleManage2',
+          name: 'exampleManage2',
+          component: () => import('@/views/optimizeCenter/manage/example2'),
+          meta: { name: '样例2' },
+          hidden: true
+        }
+      ]
+    },
+    {
+      path: '/designPattern',
+      name: 'designPattern',
+      redirect: '/design',
+      component: Layout,
+      meta: {
+        name: '设计模式',
+        icon: 'iconfont icon-icon_shiyongwendang'
+      },
+      children: [
+        {
+          path: '/design',
+          name: 'design',
+          component: () => import('@/views/designPattern/Design'),
+          meta: { name: '设计原则' }
+        },
+        {
+          path: '/singleton',
+          name: 'singleton',
+          component: () => import('@/views/designPattern/Singleton'),
+          meta: { name: '单例模式' }
+        },
+        {
+          path: '/proxy',
+          name: 'proxy',
+          component: () => import('@/views/designPattern/Proxy'),
+          meta: { name: '代理模式' }
+        },
+        {
+          path: '/command',
+          name: 'command',
+          component: () => import('@/views/designPattern/Command'),
+          meta: { name: '命令模式' }
+        },
+        {
+          path: '/composite',
+          name: 'composite',
+          component: () => import('@/views/designPattern/Composite'),
+          meta: { name: '组合模式' }
+        },
+        {
+          path: '/flyWeight',
+          name: 'flyWeight',
+          component: () => import('@/views/designPattern/FlyWeight'),
+          meta: { name: '享元模式' }
+        },
+        {
+          path: '/state',
+          name: 'state',
+          component: () => import('@/views/designPattern/State'),
+          meta: { name: '状态模式' }
+        },
+        {
+          path: '/strategy',
+          name: 'strategy',
+          component: () => import('@/views/designPattern/Strategy'),
+          meta: { name: '策略模式' }
+        },
+        {
+          path: '/strategy2',
+          name: 'strategy2',
+          component: () => import('@/views/designPattern/Strategy2'),
+          meta: { name: '策略模式2' }
+        },
+        {
+          path: '/decorator',
+          name: 'decorator',
+          component: () => import('@/views/designPattern/Decorator'),
+          meta: { name: '装饰者模式' }
+        },
+        {
+          path: '/mediator',
+          name: 'mediator',
+          component: () => import('@/views/designPattern/Mediator'),
+          meta: { name: '中介者模式' }
+        },
+        {
+          path: '/response',
+          name: 'response',
+          component: () => import('@/views/designPattern/Response'),
+          meta: { name: '职责链模式' }
+        },
+        {
+          path: '/adapter',
+          name: 'adapter',
+          component: () => import('@/views/designPattern/Adapter'),
+          meta: { name: '适配器模式' }
+        },
+        {
+          path: '/templateMethod',
+          name: 'templateMethod',
+          component: () => import('@/views/designPattern/TemplateMethod'),
+          meta: { name: '模版方法模式' }
+        },
+        {
+          path: '/pubSub',
+          name: 'pubSub',
+          component: () => import('@/views/designPattern/PubSub'),
+          meta: { name: '发布订阅模式' }
         }
       ]
     },

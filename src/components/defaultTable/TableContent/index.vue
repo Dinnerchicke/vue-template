@@ -128,6 +128,27 @@ export default {
       this.operaDialog = true
       this.dialogTitle = handle
     },
+    resCodeOpera (msg) { // 统一处理返回值
+      setTimeout(() => {
+        // console.log(this.res.data)
+        if (this.resCode() === 1000) {
+          this.apiLoading = true
+          this.getDatas()
+          this.operaDialog = false
+          this.apiLoading = false
+          this.$message({
+            center: true,
+            message: msg + '成功',
+            type: 'success'
+          })
+        } else { // 这里因为错误的返回值往往不变所以不分离
+          this.$message.error({
+            center: true,
+            message: this.res.errmsg
+          })
+        }
+      }, 100)
+    },
     submitForm () {
       this.$refs.operaForm.validate(async valid => {
         if (valid) {
@@ -135,50 +156,14 @@ export default {
             // 这里获取到res以后保存
             this.$emit('addData', this.operaForm)
             // 设置为异步任务,不然就会在emit之前输出
-            setTimeout(() => {
-              // console.log(this.res.data)
-              if (this.res.data.errno === 1000) {
-                this.apiLoading = true
-                this.getDatas()
-                this.operaDialog = false
-                this.apiLoading = false
-                this.$message({
-                  center: true,
-                  message: '添加成功',
-                  type: 'success'
-                })
-              } else {
-                this.$message.error({
-                  center: true,
-                  message: this.res.errmsg
-                })
-              }
-            }, 100)
+            this.resCodeOpera('添加')
           } else {
             // 设置为异步任务,不然就会在emit之前输出
             this.$emit('editData', this.operaForm._id, this.operaForm)
             // while (this.res.data === undefined) { sleep }
-            setTimeout(() => {
-              if (this.res.data.errno === 1000) {
-                this.tableData.splice(Number(this.updateIndex), 1, this.operaForm)
-                this.operaDialog = false
-                this.$message({
-                  center: true,
-                  message: '修改成功',
-                  type: 'success'
-                })
-              } else if (this.res.errno === 1022) {
-                this.$message.error({
-                  center: true,
-                  message: '该内容不存在,请刷新后重试'
-                })
-              } else {
-                this.$message.error({
-                  center: true,
-                  message: this.res.errmsg
-                })
-              }
-            }, 100)
+            this.resCodeOpera('修改')
+            this.tableData.splice(Number(this.updateIndex), 1, this.operaForm) // 先删除项目再添加项目
+            this.getDatas()
           }
         } else {
           this.$message({
@@ -209,22 +194,7 @@ export default {
       })
         .then(() => {
           this.$emit('deleteData', data)
-          setTimeout(() => {
-            if (this.res.data.errno === 1000) {
-              this.apiLoading = true
-              this.getDatas()
-              this.apiLoading = false
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              })
-            } else {
-              this.$message.error({
-                center: true,
-                message: this.res.errmsg
-              })
-            }
-          }, 100)
+          this.resCodeOpera('删除')
         })
         .catch(() => {
           this.$message({
@@ -235,6 +205,9 @@ export default {
     },
 
     // 基本组件控制
+    resCode () {
+      return this.res.data.errno
+    },
     getNode () {
       // 假如上一个节点为slot节点且有内容,则返回true,空出navbar的内容
       // var child = document.getElementsByClassName('el-col el-col-24 el-col-offset-2 el-col-md-4')[0].previousSibling.previousSibling.getAttribute('class')
@@ -280,7 +253,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 >>>.el-table-column--selection .cell {
     padding-left: 14px;
     padding-right:0px;

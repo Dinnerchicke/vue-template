@@ -4,6 +4,13 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
+// 分析运行时速度使用
+// const SpeedMeasurePlugin = require('speed-measure-webpack-plugin'); //引入插件
+// const smp = new SpeedMeasurePlugin(); //创建插件对象
+
+// 分析包体积时使用
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -19,6 +26,7 @@ const createLintingRule = () => ({
   }
 })
 
+// module.exports = smp.wrap({ // 分析时间使用
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
@@ -54,15 +62,21 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        use: ['thread-loader',{
+          loader:'babel-loader',
+          'options': {
+            // 第二次构建时会读取之前的缓存
+            cacheDirectory: true
+          }
+        },
+        ],
+        // loader: ['thread-loader','babel-loader'],
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')],
+        
       },
       {
-
         test: /\.sass$/,
-      
         loaders: ['style', 'css', 'sass']
-      
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -90,6 +104,9 @@ module.exports = {
       }
     ]
   },
+  // plugins: [
+  //   new BundleAnalyzerPlugin()
+  // ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).

@@ -108,7 +108,7 @@ export default {
   background-repeat: no-repeat;
   background-attachment: fixed;
   /* background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8); */
-  background-image: url('../../assets/image/7.jpg');
+  background-image: url('http://81.68.73.55/group1/M00/00/0B/rBEAA2A0w52AcAO8ACPWU_YfTHQ967.jpg');
 }
 .demo-ruleForm{
   /* flex-direction: column;

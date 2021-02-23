@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin'); // dll
 
 const env = require('../config/prod.env')
 
@@ -28,6 +29,18 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    new webpack.DllReferencePlugin({
+      context: path.resolve(__dirname, '..'),
+      manifest: require('./vendor-manifest.json')
+      }),
+      //这个主要是将生成的vendor.dll.js文件加上hash值插入到页面中。
+      new AddAssetHtmlPlugin([{
+      filepath: path.resolve(__dirname, '../static/js/vendor.dll.js'),
+      outputPath: utils.assetsPath('js'),
+      publicPath: path.posix.join(config.build.assetsPublicPath, 'static/js'),
+      includeSourcemap: false,
+      hash: true,
+    }]),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env

@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import router from './router'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+// import ElementUI from 'element-ui'
+// import 'element-ui/lib/theme-chalk/index.css'
 // 不使用上面这条语句不能使用elementui
 import '@/assets/css/global.css'
 import '@/assets/icon/iconfont.css'
@@ -15,7 +15,7 @@ import echarts from 'echarts'
 import VueVirtualScroller from 'vue-virtual-scroller'
 
 Vue.use(VueVirtualScroller)
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
 Vue.prototype.$echarts = echarts
 Vue.prototype.$md5 = md5
 

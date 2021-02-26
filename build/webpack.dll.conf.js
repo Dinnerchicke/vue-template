@@ -5,8 +5,15 @@ const path = require('path');
 		    vendor: [
 		      'vue',
 		      'vue-router',
-		      'element-ui',
+		      // 'element-ui',
+					// 'element-ui/lib/theme-chalk/index.css',
           'zrender',
+					'axios',
+					'vue-virtual-scroller',
+					'vuex',
+					'core-js',
+					'blueimp-md5',
+					'nprogress',
           'mockjs',
 		      'echarts'      //这里是需要缓存的模块和插件
 		    ]
@@ -25,6 +32,9 @@ const path = require('path');
 		      name: '[name]_library',
 		      // context: __dirname
 		    }),
+				new webpack.DefinePlugin({
+					'process.env.NODE_ENV': JSON.stringify('production') // 指定环境
+				})
 		    //压缩 只是为了包更小一点 
 		  ]
 		};

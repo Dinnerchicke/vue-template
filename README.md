@@ -2,6 +2,8 @@
 
 此项目使用vue2.x,初步目标为建成vue模版用于快速开发
 
+快速开发版本在templateModule分支，master分支用于实现新想法
+
 布局使用flex布局,暂定样式使用scss
 
 UI使用ElementUI

@@ -4,7 +4,8 @@ import Vue from 'vue'
 // 默认axios配置
 
 const service = axios.create({
-  baseURL: 'http://62.234.130.108:7008/',
+  // baseURL: 'http://62.234.130.108:7008/',
+  baseURL: 'http://127.0.0.1:9010', // 本地
   timeout: 2000000 // 请求超时时间
 })
 

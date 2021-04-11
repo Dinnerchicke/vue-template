@@ -8,7 +8,7 @@ const main = ['main', 'mainF']
 const person = ['person', 'personF']
 
 // 管理员的样例中心
-const FM = ['optimizeCenter', 'exampleManage1', 'exampleManage2'] // 优化中心
+const FM = ['optimizeCenter', 'exampleManage1'] // 优化中心
 
 const SM = ['exampleCenter', 'table', 'echarts'] // 样例中心
 

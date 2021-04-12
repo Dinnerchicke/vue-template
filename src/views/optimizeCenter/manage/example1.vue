@@ -2,7 +2,7 @@
   <div class="">
     <div class="card">
       <!-- 在App.vue页面用keep-alive缓存页面 -->
-      <!-- <example2 :result="result" /> -->
+      <example2 :result="result" />
       <el-button type="primary" @click="isDisplay = !isDisplay" style="margin:10px">切换显隐</el-button>
       <!--
         使用v-show来代替v-if,因为v-if每次都要重新渲染
@@ -38,11 +38,11 @@
 
 <script>
 import defer from '@/mixin/defer.js'
-// import example2 from './example2'
+import example2 from './example2'
 export default {
   name: '',
   components: {
-    // example2
+    example2
   },
   props: [],
   mixins: [defer()],

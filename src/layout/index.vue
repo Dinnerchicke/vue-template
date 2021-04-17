@@ -1,7 +1,7 @@
 <template>
   <el-container class="layout-container">
     <el-aside width="auto" class="el-aside">
-      <Aside :is-collapse="isCollapse" style="" />
+      <myAside :is-collapse="isCollapse" style="" />
     </el-aside>
     <el-container>
       <el-header class="el-header navshadow" style="height:50px">
@@ -32,12 +32,12 @@
 <script>
 import { mapGetters } from 'vuex'
 // import导入的要先放入return{}里才能为之所用
-import Aside from './components/SideBar/index'
+import myAside from './components/SideBar/index'
 import breadcrumb from './components/BreadCrumb/index'
 export default {
   name: 'layout',
   components: {
-    Aside,
+    myAside,
     breadcrumb
   },
   data () {

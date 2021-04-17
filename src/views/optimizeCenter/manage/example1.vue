@@ -25,13 +25,13 @@
       :item-size="32"
       key-field="id"
       v-slot="{ item }" -->
-      <RecycleScroller
+      <!-- <RecycleScroller
       :items="list"
       :item-size="list.length"
       key-field="id"
       v-slot="{ item }">
         <div>{{item}}</div>
-      </RecycleScroller>
+      </RecycleScroller> -->
     </div>
   </div>
 </template>

@@ -145,8 +145,7 @@ const router = new Router({
           path: '/exampleManage2',
           name: 'exampleManage2',
           component: () => import('@/views/optimizeCenter/manage/example2'),
-          meta: { name: '样例2' },
-          hidden: true
+          meta: { name: '样例2' }
         }
       ]
     },
@@ -301,8 +300,8 @@ const router = new Router({
         {
           path: '/person',
           name: 'person',
-          component: () => import('@/views/person/index'),
-          hidden: true
+          component: () => import('@/views/person/index')
+          // hidden: true
         }
       ]
     }

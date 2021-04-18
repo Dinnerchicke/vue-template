@@ -12,9 +12,9 @@ import '@/assets/icon/iconfont.css'
 import '@/utils/http.js'
 import '@/utils/permission.js'
 
+import '@/styles/transition.scss'
 import '@/styles/global.css'
 import '@/styles/normalize.css'
-import '@/styles/transition.scss'
 
 import md5 from 'blueimp-md5'
 import echarts from 'echarts'

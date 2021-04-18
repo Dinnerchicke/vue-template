@@ -11,7 +11,7 @@
     active-text-color="#3e99d5">
     <!-- v-if="routerMain==='main'" -->
     <!-- 首先判断是不是hidden项目，如果不是才才进入循环 -->
-    <div v-for="item in routerGet" :key="item.id">
+    <div v-for="item in routerGet" :key="item.id" v-if="(item.hidden==undefined) && (routerMapping.toString().indexOf(item.name)!==-1)">
       <!-- 循环判断假如有children则进入上面，否则进入下面 -->
       <el-menu-item v-if="item.children.length === 1" :index="item.children[0].name">
         <i :class="item.meta.icon" style="" />
@@ -23,7 +23,7 @@
           <i :class="item.meta.icon" />
           <span style="margin-right:70px;padding-left:10px">{{item.meta.name}}</span>
         </template>
-        <el-menu-item :index="items.name" v-for="items in item.children" :key="items.id">
+        <el-menu-item :index="items.name" v-for="items in item.children" v-if="(items.hidden==undefined) && (routerMapping.toString().indexOf(items.name)!==-1)" :key="items.id">
           {{items.meta.name}}
         </el-menu-item>
       </el-submenu>
@@ -78,25 +78,9 @@ export default {
     // handleClose (key, keyPath) {
     //   console.log(key, keyPath)
     // }
-    isExistInRouter (item) {
-      return !!(((item.hidden === undefined) && (this.routerMapping.toString().indexOf(item.name) !== -1)))
-    },
     routerinit () {
-      let routerInit = this.$router.options.routes
-      let routerGet = []
-      routerInit.forEach(item => {
-        if (this.isExistInRouter(item)) {
-          let itemChildren = []
-          item.children.forEach(itemChild => {
-            if (this.isExistInRouter(itemChild)) {
-              itemChildren.push(itemChild)
-            }
-          })
-          item.children = itemChildren
-          routerGet.push(item)
-        }
-      })
-      this.routerGet = routerGet
+      this.routerGet = this.$router.options.routes
+      // console.log(this.routerGet)
     },
     roleinit () {
       // 假如role的权限为0,则使用学生权限,反之使用管理员权限

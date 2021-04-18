@@ -92,14 +92,11 @@ export default {
               itemChildren.push(itemChild)
             }
           })
-          console.log('itemChildren', itemChildren)
-          console.log('item.children', item.children)
           item.children = itemChildren
           routerGet.push(item)
         }
       })
       this.routerGet = routerGet
-      console.log(routerGet)
     },
     roleinit () {
       // 假如role的权限为0,则使用学生权限,反之使用管理员权限

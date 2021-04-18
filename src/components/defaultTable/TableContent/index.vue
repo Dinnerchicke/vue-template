@@ -26,11 +26,11 @@
         border
       >
       <!-- 对列内容进行扩充 -->
-      <el-table-column :width="item.width" v-for="item in tableList" v-if="item.id<=0" :key="item.id" :prop="item.prop" :label="item.name" align="center">
+      <el-table-column :width="item.width" v-for="item in tableListIdPicker('idSmallerThan0')" :key="item.id" :prop="item.prop" :label="item.name" align="center">
         <slot name="tableColumn" />
       </el-table-column>
       <!-- 只渲染tableList中id>0的项 -->
-      <el-table-column :width="item.width" v-for="item in tableList" v-if="item.id>0" :key="item.id" :prop="item.prop" :label="item.name" align="center">
+      <el-table-column :width="item.width" v-for="item in tableListIdPicker('idBiggerThan0')" :key="item.id" :prop="item.prop" :label="item.name" align="center">
         <template slot-scope="scope">
           {{scope.row[scope.column.property]}}
         </template>
@@ -71,10 +71,10 @@
         :model="operaForm"
         label-width="100px"
       >
-        <el-form-item v-for="item in operaList" :key="item.id" v-if="item.exist" :prop="item.prop" :label="item.label">
+        <el-form-item v-for="item in isItemExist(true)" :key="item.id" :prop="item.prop" :label="item.label">
           <slot name="formItem" />
         </el-form-item>
-        <el-form-item v-for="item in operaList" :key="item.id" v-if="item.exist===undefined" :prop="item.prop" :label="item.label">
+        <el-form-item v-for="item in isItemExist(false)" :key="item.id" :prop="item.prop" :label="item.label">
           <el-input v-model="operaForm[item.prop]" :placeholder="item.placeholder" />
         </el-form-item>
       </el-form>
@@ -106,7 +106,53 @@ export default {
       search: ''
     }
   },
-  computed: {},
+  computed: {
+    tableListIdPicker () {
+      // 闭包获取计算属性传入的值
+      return function (size) {
+        // 本地保存，如果每次都用this会加大消耗
+        let tableList = this.tableList
+        let permitList = []
+        if (size === 'idBiggerThan0') {
+          tableList.forEach(column => {
+            if (column.id > 0) {
+              permitList.push(column)
+            }
+          })
+        } else if (size === 'idSmallerThan0') {
+          tableList.forEach(column => {
+            if (column.id <= 0) {
+              permitList.push(column)
+            }
+          })
+        } else {
+          console.warn('未传入size值')
+        }
+        return permitList
+      }
+    },
+    isItemExist () {
+      // 传入flag选择item.exist是否存在
+      return function (flag) {
+        let operaList = this.operaList
+        let itemList = []
+        if (flag) {
+          operaList.forEach(item => {
+            if (item.exist) {
+              itemList.push(item)
+            }
+          })
+        } else {
+          operaList.forEach(item => {
+            if (item.exist === undefined) {
+              itemList.push(item)
+            }
+          })
+        }
+        return itemList
+      }
+    }
+  },
   watch: {},
   created () {
   },

@@ -24,7 +24,9 @@
         </el-tooltip>
       </el-header>
       <el-main class="el-main">
-        <router-view />
+        <transition name="fade-transform" mode="out-in">
+          <router-view />
+        </transition>
       </el-main>
     </el-container>
   </el-container>
@@ -114,7 +116,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .layout-container {
   position: fixed;
   left: 0;
@@ -144,5 +146,21 @@ export default {
     color: #333;
     /* text-align: center; */
     line-height: 200px;
+}
+
+.el-aside::-webkit-scrollbar {
+  width: 4px;
+}
+.el-aside::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2);
+}
+.el-aside::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  border-radius: 0;
+  background: rgba(0,0,0,0.1);
 }
 </style>

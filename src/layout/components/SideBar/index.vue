@@ -15,15 +15,15 @@
       <!-- 循环判断假如有children则进入上面，否则进入下面 -->
       <el-menu-item v-if="item.children.length === 1" :index="item.children[0].name">
         <i :class="item.meta.icon" style="" />
-        <span style="margin-right:70px;margin-left:10px">{{item.meta.name}}</span>
+        <span class="title">{{item.meta.name}}</span>
       </el-menu-item>
 
       <el-submenu v-else :index="item.name">
         <template slot="title">
           <i :class="item.meta.icon" />
-          <span style="margin-right:70px;padding-left:10px">{{item.meta.name}}</span>
+          <span class="title">{{item.meta.name}}</span>
         </template>
-        <el-menu-item :index="items.name" v-for="items in item.children" :key="items.id">
+        <el-menu-item :index="items.name" v-for="items in item.children" :key="items.id" style="font-size:14px">
           {{items.meta.name}}
         </el-menu-item>
       </el-submenu>
@@ -118,9 +118,15 @@ export default {
 /* .menu {
   overflow-y:scroll;
 } */
- /* .menu::-webkit-scrollbar{
+/* .menu::-webkit-scrollbar{
     width: 0 !important;
 } */
+
+.title{
+  margin-right:70px;
+  margin-left:10px;
+  font-size:14px
+}
 
 /* 改侧边栏以后会出现bug */
 .el-menu--collapse >>> .el-menu-item span{

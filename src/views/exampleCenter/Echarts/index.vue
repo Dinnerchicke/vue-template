@@ -1,14 +1,17 @@
 <template>
   <div class="">
-    Content
-    <!-- {{arrGet}} -->
+    <h1>Render</h1>
+    <render tag="h3"></render>
   </div>
 </template>
 
 <script>
+import render from './render'
 export default {
   name: '',
-  components: {},
+  components: {
+    render
+  },
   props: [],
   data () {
     return {

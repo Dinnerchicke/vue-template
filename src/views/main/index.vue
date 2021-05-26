@@ -12,9 +12,7 @@
       </el-col>
     </el-row> -->
     <el-row>
-      <el-col :span="24" class="card" style="height:565px">
-        <div id="echart1" style="height:550px;width:100%" />
-      </el-col>
+      <el-col :span="24" class="card" style="height:565px" id="echart1" />
       <el-col :sm="{span:11}" :lg="7" class="card" style="height:400px">
         <div id="echart2" style="height:400px;width:100%" />
       </el-col>
@@ -49,7 +47,9 @@ export default {
     // this.test()
   },
   mounted () {
-    this.chartsInit()
+    this.$nextTick(function () {
+      this.chartsInit()
+    })
   },
   methods: {
     chartsInit () {

@@ -79,7 +79,10 @@ const router = new Router({
           path: '/table',
           name: 'table',
           component: () => import('@/views/exampleCenter/Table/index'),
-          meta: { name: '表格样例' }
+          meta: {
+            name: '表格样例',
+            keepAlive: true
+          }
         },
         {
           path: '/echarts',
@@ -265,25 +268,37 @@ const router = new Router({
           path: '/api',
           name: 'api',
           component: () => import('@/views/authority/api/index'),
-          meta: { name: 'api管理' }
+          meta: {
+            name: 'api管理',
+            keepAlive: true
+          }
         },
         {
           path: '/auth',
           name: 'auth',
           component: () => import('@/views/authority/auth/index'),
-          meta: { name: '权限管理' }
+          meta: {
+            name: '权限管理',
+            keepAlive: true
+          }
         },
         {
           path: '/role',
           name: 'role',
           component: () => import('@/views/authority/role/index'),
-          meta: { name: '角色管理' }
+          meta: {
+            name: '角色管理',
+            keepAlive: true
+          }
         },
         {
           path: '/user',
           name: 'user',
           component: () => import('@/views/authority/user/index'),
-          meta: { name: '用户管理' }
+          meta: {
+            name: '用户管理',
+            keepAlive: true
+          }
         }
       ]
     },

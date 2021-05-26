@@ -24,9 +24,12 @@
         </el-tooltip>
       </el-header>
       <el-main class="el-main">
-        <transition name="fade-transform" mode="out-in">
-          <router-view />
-        </transition>
+        <!-- <transition-group name="fade-transform" mode="out-in"> -->
+          <keep-alive >
+            <router-view v-if="$route.meta.keepAlive" :key="$route.name + ($route.params.id || null)"></router-view>
+          </keep-alive>
+          <router-view v-if="!$route.meta.keepAlive" :key="$route.name + ($route.params.id || null)"></router-view>
+        <!-- </transition-group> -->
       </el-main>
     </el-container>
   </el-container>
@@ -60,9 +63,11 @@ export default {
       // this.$store.commit('insertCurrentPage', 'main')
       // this.$store.commit('insertLoginState', '')
       // this.$store.commit('insertRole', '')
-      sessionStorage.clear()
       this.$router.push('/login')
-      window.location.reload() // 刷新vuex
+      sessionStorage.clear()
+      setTimeout(() => {
+        window.location.reload() // 刷新vuex
+      })
     },
     handleFullScreen () {
       let element = document.documentElement
@@ -117,6 +122,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.el-main::-webkit-scrollbar {
+  width: 4px;
+}
+.el-main::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2);
+}
+.el-main::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  border-radius: 0;
+  background: rgba(0,0,0,0.1);
+}
+
 .layout-container {
   position: fixed;
   left: 0;

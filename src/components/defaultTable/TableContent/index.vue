@@ -71,10 +71,10 @@
         :model="operaForm"
         label-width="100px"
       >
-        <el-form-item v-for="item in isItemExist(true)" :key="item.id" :prop="item.prop" :label="item.label">
+        <el-form-item v-for="item in slotItem" :key="item.id" :prop="item.prop" :label="item.label">
           <slot name="formItem" />
         </el-form-item>
-        <el-form-item v-for="item in isItemExist(false)" :key="item.id" :prop="item.prop" :label="item.label">
+        <el-form-item v-for="item in commonItem" :key="item.id" :prop="item.prop" :label="item.label">
           <el-input v-model="operaForm[item.prop]" :placeholder="item.placeholder" />
         </el-form-item>
       </el-form>
@@ -94,6 +94,15 @@ export default {
   props: ['tableList', 'tableData', 'res', 'operaList', 'count'],
   data () {
     return {
+      // dialogForm渲染项
+      slotItem: [],
+      commonItem: [],
+      // 四种操作情况：插槽表单项&普通表单项; 编辑存在表单项&编辑不存在表单项;
+      slotFormItem: [],
+      slotFormItemeditExist: [],
+      commonFromItem: [],
+      commonFromItemeditExist: [],
+
       getNodeRes: false,
       loadingState: false,
       operaDialog: false,
@@ -130,31 +139,11 @@ export default {
         }
         return permitList
       }
-    },
-    isItemExist () {
-      // 传入flag选择item.exist是否存在
-      return function (flag) {
-        let operaList = this.operaList
-        let itemList = []
-        if (flag) {
-          operaList.forEach(item => {
-            if (item.exist) {
-              itemList.push(item)
-            }
-          })
-        } else {
-          operaList.forEach(item => {
-            if (item.exist === undefined) {
-              itemList.push(item)
-            }
-          })
-        }
-        return itemList
-      }
     }
   },
   watch: {},
   created () {
+    this.isItemExist()
   },
   mounted () {
     // this.getDatas()
@@ -166,7 +155,11 @@ export default {
       if (handle === '添加') { // 增接口调用
         this.operaForm = {}
         this.opera = 'add'
+        this.slotItem = this.slotFormItem
+        this.commonItem = this.commonFromItem
       } else if (handle === '编辑') { // 改接口调用
+        this.slotItem = this.slotFormItemeditExist
+        this.commonItem = this.commonFromItemeditExist
         this.operaForm = JSON.parse(JSON.stringify(this.tableData[index]))
         this.updateIndex = index
         this.opera = 'update'
@@ -253,6 +246,34 @@ export default {
     // 基本组件控制
     resCode () {
       return this.res.data.errno
+    },
+    isItemExist () {
+      // 传入itemExist选择item.exist是否存在
+      // 传入editExist选择edit是否存在
+      let operaList = this.operaList
+      let slotFormItem = []
+      let commonFromItem = []
+      let slotFormItemeditExist = []
+      let commonFromItemeditExist = []
+
+      operaList.forEach(item => {
+        if (item.exist && item.editExist) { // item存在且edit存在
+          slotFormItemeditExist.push(item)
+          slotFormItem.push(item)
+        } else if (!item.exist && item.editExist) { // item不存在且edit存在
+          commonFromItemeditExist.push(item)
+          commonFromItem.push(item)
+        } else if (item.exist && !item.editExist) { // item存在且edit不存在
+          slotFormItem.push(item)
+        } else { // item不存在且edit不存在
+          commonFromItem.push(item)
+        }
+      })
+      this.slotFormItem = slotFormItem
+      this.commonFromItem = commonFromItem
+      this.slotFormItemeditExist = slotFormItemeditExist
+      this.commonFromItemeditExist = commonFromItemeditExist
+      console.log(slotFormItem)
     },
     getNode () {
       // 假如上一个节点为slot节点且有内容,则返回true,空出navbar的内容

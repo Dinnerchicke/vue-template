@@ -17,9 +17,9 @@
     >
       <!--  -->
       <template slot="navBar">
-        <el-input v-model="search" placeholder="请输入关键字">
+        <!-- <el-input v-model="search" placeholder="请输入关键字">
           <el-button slot="append" icon="el-icon-search" />
-        </el-input>
+        </el-input> -->
       </template>
     </table-content>
   </div>
